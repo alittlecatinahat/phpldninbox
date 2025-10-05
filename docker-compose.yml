@@ -1,0 +1,49 @@
+# uz ne...
+# version: '3.8'
+
+services:
+  ldn_php:
+    build: .
+    container_name: ldn_php
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - ldn_mysql
+    networks:
+      - ldn_network
+    environment:
+      - DB_HOST=ldn_mysql
+      - DB_NAME=ldn_inbox
+      - DB_USER=ldn_user
+      - DB_PASSWORD=ldn_password
+
+  ldn_mysql:
+    image: mysql:8.0
+    container_name: ldn_mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ldn_inbox
+      MYSQL_USER: ldn_user
+      MYSQL_PASSWORD: ldn_password
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uldn_user -pldn_password --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 20s
+    volumes:
+      - ldn_mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - ldn_network
+
+networks:
+  ldn_network:
+    driver: bridge
+
+volumes:
+  ldn_mysql_data:

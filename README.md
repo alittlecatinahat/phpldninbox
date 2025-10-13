@@ -212,6 +212,21 @@ These credential must be imported from the seed .sql file.
         └── logout.php          # Logout handler
 ```
 
+## @Types of messages
+
+| Artifact State           | Replies                    |
+|--------------------------|---------------------------|
+| create                  |                           |
+| update                  |                           |
+| remove                  |                           |
+| announce               |                           |
+| Value adding services  |                           |
+| offer                  | accept, reject, undo      |
+| accept                 | undo                      |
+| reject                 | undo                      |
+| announce              | undo                      |
+| undo                  |                           |
+
 ## API Reference
 
 ### API Discovery Endpoint

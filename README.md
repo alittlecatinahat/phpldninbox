@@ -908,7 +908,7 @@ Current implementation uses synchronous cURL which blocks PHP execution and does
 
 ### PHP Framework Migration
 
-The codebase uses **vanilla PHP** for simplicity and educational purposes. For production systems, consider migration to mature frameworks:
+The codebase uses **vanilla PHP** for simplicity and educational purposes. For production systems, we may consider migration to mature frameworks:
 
 **Framework Options:**
 - **Symfony** - Enterprise-grade, excellent Doctrine ORM integration
@@ -921,6 +921,7 @@ The codebase uses **vanilla PHP** for simplicity and educational purposes. For p
 - ORM/Database abstraction (Eloquent, Doctrine)
 - Testing frameworks (PHPUnit integration)
 - Caching layers (Redis, Memcached)
+- More "mature" approach, MVC
 
 ### Notification Visualization
 
@@ -947,7 +948,7 @@ Currently, notifications are displayed as **plain JSON** with basic field extrac
 
 ### Database Alternatives
 
-The current implementation uses **MySQL 8.0** with native JSON column support. For different deployment scenarios or performance requirements, consider alternative database backends:
+The current implementation uses **MySQL 8.0** with native JSON column support. For different deployment scenarios or performance requirements, we may consider alternative database backends:
 
 #### PostgreSQL Compatibility
 
@@ -968,6 +969,7 @@ The current implementation uses **MySQL 8.0** with native JSON column support. F
 - **Better concurrent write performance** (MVCC architecture)
 - **JSON schema validation** via CHECK constraints or triggers
 - **Open source licensing** (no commercial considerations)
+- Real opnensource (vs. MySQL)
 
 **Example Query Translation:**
 ```sql
@@ -980,11 +982,9 @@ SELECT * FROM i_notifications WHERE body_jsonld->>'type' = 'Offer';
 SELECT * FROM i_notifications WHERE body_jsonld @> '{"type":"Offer"}';
 ```
 
-**Estimated Effort:** 2-3 days for core migration, 1 week for testing and optimization
-
 #### MongoDB Rewrite (NoSQL Alternative)
 
-**MongoDB 4.0+** offers a document-oriented approach that may better suit JSON-LD workloads:
+**MongoDB 4.0+** offers a document-oriented approach that may better suit JSON-LD workloads but has some disadvatages:
 
 **Architecture Changes:**
 - Store notifications as native BSON documents (no JSON parsing overhead)

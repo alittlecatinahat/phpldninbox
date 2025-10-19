@@ -1,0 +1,23 @@
+# ==============================================================================
+# Apache URL Rewrite Rules for LDN Inbox
+# ==============================================================================
+# These rules enable clean URLs for Linked Data resources
+# ==============================================================================
+
+# Enable the rewrite engine
+RewriteEngine On
+
+# Rewrite /notifications/{id} to notifications.php
+# Handles URLs like: /notifications/notif_68e22343480ba5.98100709
+# Passes the full path to PHP for processing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^notifications/([a-zA-Z0-9_\.]+)$ notifications.php [L,QSA]
+
+# Future: Rewrite /resources/{id} to resource.php (when implemented)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^resources/([0-9]+)$ resource.php?id=$1 [L,QSA]
+
+# Redirect root to public directory (if accessed without /public/)
+# This is handled by Apache configuration, but included for reference
